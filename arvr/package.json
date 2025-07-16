@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.14.1",
+    "qrcode": "^1.5.4",
+    "razorpay": "^2.9.6",
+    "sequelize": "^6.37.7"
+  }
+}
