@@ -3,12 +3,13 @@ const sequelize = require('./config/config');
 const Blockchain = require('./blockchain/blockchain');
 const Product = require('./models/product'); // 👈 include Product model
 const qrRoutes = require('./routes/qr');
+const auth=require('./routes/auth')
 const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/qr', qrRoutes);
-
+app.use('/auth',auth);
 (async () => {
   try {
     await sequelize.sync({ alter: true });
