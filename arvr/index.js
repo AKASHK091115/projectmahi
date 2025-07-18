@@ -1,7 +1,7 @@
 const express = require('express');
 const sequelize = require('./config/config');
 const Blockchain = require('./blockchain/blockchain');
-const Product = require('./models/product'); // 👈 include Product model
+const Product = require('./models/product'); 
 const qrRoutes = require('./routes/qr');
 const auth=require('./routes/auth')
 const cors = require('cors');
@@ -21,8 +21,8 @@ app.use('/auth',auth);
     const cartRoutes = require('./routes/cart')(bc);
     app.use('/cart', cartRoutes);
 
-    const arScanRoutes = require('./routes/ar-scan')(bc, Product); // 👈 add scan route
-    app.use('/ar', arScanRoutes); // 👈 mount it at /ar
+    const arScanRoutes = require('./routes/ar-scan')(bc, Product);
+    app.use('/ar', arScanRoutes);
 
     app.listen(3000, () => console.log('Server running on http://localhost:3000'));
   } catch (err) {
