@@ -12,7 +12,7 @@ const ScannerPage = () => {
   const handleScan = useCallback(async (marker) => {
     if (!marker) return;
     try {
-      const response = await axios.post("https://tx475zwk-3000.inc1.devtunnels.ms/ar/scan-product", {
+      const response = await axios.post("http://localhost:3000/ar/scan-product", {
         markerId: marker,
         userId,
       });
@@ -38,7 +38,7 @@ const ScannerPage = () => {
       {markerId ? (
         <>
           <img
-            src={`https://tx475zwk-3000.inc1.devtunnels.ms/qr?markerId=${markerId}`}
+            src={`http://localhost:3000/qr?markerId=${markerId}`}
             alt={`QR Code for ${markerId}`}
             style={{ width: "200px", margin: "20px" }}
           />

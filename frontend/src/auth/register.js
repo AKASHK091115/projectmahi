@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('https://tx475zwk-3000.inc1.devtunnels.ms/auth/register', {
+      const res = await fetch('https://localhost:3000/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
