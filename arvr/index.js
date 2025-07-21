@@ -24,7 +24,7 @@ app.use('/auth',auth);
     const arScanRoutes = require('./routes/ar-scan')(bc, Product);
     app.use('/ar', arScanRoutes);
 
-    app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+    app.listen(3000, () => console.log('Server running on https://tx475zwk-3000.inc1.devtunnels.ms/'));
   } catch (err) {
     console.error('Startup error:', err);
   }

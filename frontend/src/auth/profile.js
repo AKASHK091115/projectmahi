@@ -21,7 +21,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/auth/profile/${storedEmail}`);
+        const res = await fetch(`https://tx475zwk-3000.inc1.devtunnels.ms/auth/profile/${storedEmail}`);
         const data = await res.json();
         if (data.success) {
           setFormData({
@@ -49,7 +49,7 @@ export default function ProfilePage() {
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3000/auth/profile', {
+      const res = await fetch('https://tx475zwk-3000.inc1.devtunnels.ms/auth/profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
