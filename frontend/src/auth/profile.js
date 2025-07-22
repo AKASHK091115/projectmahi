@@ -21,7 +21,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch(`https://localhost:3000/auth/profile/${storedEmail}`);
+        const res = await fetch(`http://localhost:3000/auth/profile/${storedEmail}`);
         const data = await res.json();
         if (data.success) {
           setFormData({

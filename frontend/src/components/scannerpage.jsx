@@ -1,54 +1,75 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
 
 const ScannerPage = () => {
-  const [searchParams] = useSearchParams();
-  const [markerId, setMarkerId] = useState("");
-  const [userId] = useState("u123");
   const [scanResult, setScanResult] = useState(null);
-
-  // ✅ useCallback to avoid missing dependency warning
-  const handleScan = useCallback(async (marker) => {
-    if (!marker) return;
-    try {
-      const response = await axios.post("http://localhost:3000/ar/scan-product", {
-        markerId: marker,
-        userId,
-      });
-      setScanResult(response.data);
-    } catch (err) {
-      console.error(err);
-      alert("Scan failed.");
-    }
-  }, [userId]);
+  const [userId] = useState("u123");
 
   useEffect(() => {
-    const marker = searchParams.get("markerId");
-    if (marker) {
-      setMarkerId(marker);
-      handleScan(marker); // ✅ now reliably triggers
-    }
-  }, [searchParams, handleScan]);
+    const scanner = new Html5QrcodeScanner("reader", {
+      fps: 10,
+      qrbox: { width: 250, height: 250 },
+    });
+
+    scanner.render(
+      async (decodedText, decodedResult) => {
+        try {
+          const res = await axios.post("http://localhost:3000/ar/scan-product", {
+            markerId: decodedText,
+            userId,
+          });
+          setScanResult(res.data);
+          scanner.clear(); // stop scanning after first read
+        } catch (err) {
+          console.error("Scan failed:", err);
+          alert("Scan failed.");
+        }
+      },
+      (error) => {
+        console.warn("QR error:", error);
+      }
+    );
+
+    return () => {
+      scanner.clear();
+    };
+  }, [userId]);
 
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
-      <h1>Scan the QR</h1>
+    <div style={{ textAlign: "center" }}>
+      <h1>Scan a Product QR Code</h1>
+      {!scanResult && (
+  <>
+    <div id="reader" style={{ width: "300px", margin: "auto" }} />
 
-      {markerId ? (
-        <>
-          <img
-            src={`http://localhost:3000/qr?markerId=${markerId}`}
-            alt={`QR Code for ${markerId}`}
-            style={{ width: "200px", margin: "20px" }}
-          />
-          <p><strong>Marker ID:</strong> {markerId}</p>
-        </>
-      ) : (
-        <p>Loading QR...</p>
-      )}
-
-      <button onClick={() => handleScan(markerId)}>Simulate Scan</button>
+    <button
+      onClick={async () => {
+        try {
+          const res = await axios.post("http://localhost:3000/ar/scan-product", {
+            markerId: "marker101", // 🔥 test data
+            userId,
+          });
+          setScanResult(res.data);
+        } catch (err) {
+          console.error("Simulated scan failed:", err);
+          alert("Simulated scan failed.");
+        }
+      }}
+      style={{
+        marginTop: "20px",
+        padding: "10px 20px",
+        backgroundColor: "#007bff",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        cursor: "pointer",
+      }}
+    >
+      Simulate QR Scan (marker101)
+    </button>
+  </>
+)}
 
       {scanResult && (
         <div style={{ marginTop: "20px", textAlign: "left" }}>

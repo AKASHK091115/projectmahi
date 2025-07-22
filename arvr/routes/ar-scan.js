@@ -7,14 +7,12 @@ module.exports = (blockchain, Product) => {
     try {
       const { userId, markerId } = req.body;
 
-      // Lookup product by markerId
+      
       const product = await Product.findOne({ where: { markerCode: markerId } });
 
       if (!product) {
         return res.status(404).json({ error: 'Product not found for scanned marker.' });
       }
-
-      // Add scan event to blockchain
    const scanData = {
   userId,
   productId: product.id,
