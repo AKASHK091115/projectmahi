@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
-import { Link } from "react-router-dom"; // 👈 for navigation
+import { Link,  useNavigate } from "react-router-dom"; // 👈 for navigation
 
 const ScannerPage = () => {
   const [scanResult, setScanResult] = useState(null);
   const [userId] = useState("u123");
-
+  const navigate= useNavigate()
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
       fps: 10,
@@ -53,6 +53,9 @@ const ScannerPage = () => {
       }
     }
   };
+  const handleCancel=async()=>{
+    navigate('/')
+  }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -119,6 +122,20 @@ const ScannerPage = () => {
             }}
           >
             Add to Cart
+          </button>
+          <button
+            onClick={handleCancel}
+            style={{
+              marginTop: "10px",
+              padding: "10px 20px",
+              backgroundColor: "red",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Cancel
           </button>
         </div>
       )}
