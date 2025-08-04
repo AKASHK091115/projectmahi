@@ -94,7 +94,7 @@ const Cart = () => {
   return (
     <div style={{ padding: "20px" }}>
       <nav style={{ marginBottom: "20px" }}>
-        <Link to="/">← Back to Scanner</Link>
+        <Link to="/scan">← Back to Scanner</Link>
       </nav>
 
       <h2>Wishlist</h2>
