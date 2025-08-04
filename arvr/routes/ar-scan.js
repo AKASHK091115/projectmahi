@@ -17,7 +17,7 @@ module.exports = (blockchain, Product) => {
   userId,
   productId: product.id,
   productName: product.name,
-  price: product.price, // 🔥 add this line
+  price: product.price, 
   markerId,
   action: 'scanned',
   timestamp: new Date().toISOString()
