@@ -18,8 +18,10 @@ export default function LoginPage() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data);
       if (data.success) {
         // ✅ Save username & email to localStorage
+        localStorage.setItem('userId', data.user.id);
         localStorage.setItem('username', data.user.username);
         localStorage.setItem('email', data.user.email);
 
